@@ -6,74 +6,30 @@
 <meta name="theme-color" content="#173e43">
 <title>承認ワークフロー 試作版</title>
 <style>
-  :root { --ink: #233b40; --muted: #536970; --line: #cbd6d2; --accent: #17635e; --danger: #a52d39; }
   * { box-sizing: border-box; }
-  body { margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 16px; background: #eef3f1; color: var(--ink);
+  body { margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 16px; background: #eef3f1; color: #233b40;
     font: 17px/1.75 -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, sans-serif; }
-  .card { width: min(100%, 26rem); background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 1.5rem; box-shadow: 0 6px 24px rgba(23,62,67,.12); }
-  .eyebrow { margin: 0; color: var(--muted); font-size: .9rem; }
-  .badge { display: inline-block; margin-left: .4rem; padding: 0 .45rem; border: 1px solid var(--line); border-radius: 4px; font-size: .8rem; }
-  h1 { margin: .2rem 0 .6rem; font-size: 1.5rem; color: #173e43; }
-  .hint { color: var(--muted); font-size: .9rem; margin: .4rem 0; }
-  label { display: block; font-weight: 700; margin: .9rem 0 .2rem; }
-  input { width: 100%; font: inherit; padding: .55rem .7rem; border: 1px solid #9fb2ad; border-radius: 6px; }
-  input:focus { outline: 3px solid #17635e44; border-color: var(--accent); }
-  button { margin-top: 1.1rem; font: inherit; font-weight: 700; color: #fff; background: var(--accent); border: 0; border-radius: 8px; padding: .55rem 1.3rem; cursor: pointer; }
-  button:disabled { opacity: .6; cursor: wait; }
-  .error { margin: .9rem 0 0; padding: .6rem .8rem; border-left: 4px solid var(--danger); background: #fdf0f1; color: var(--danger); border-radius: 6px; }
-  .note { margin-top: 1rem; font-size: .8rem; color: var(--muted); }
+  .card { width: min(100%, 28rem); background: #fff; border: 1px solid #cbd6d2; border-radius: 12px; padding: 1.75rem; text-align: center; box-shadow: 0 6px 24px rgba(23,62,67,.12); }
+  .eyebrow { margin: 0; color: #536970; font-size: .9rem; }
+  .badge { display: inline-block; margin-left: .4rem; padding: 0 .45rem; border: 1px solid #cbd6d2; border-radius: 4px; font-size: .8rem; }
+  h1 { margin: .3rem 0 .8rem; font-size: 1.5rem; color: #173e43; }
+  .go { display: inline-block; margin: .8rem 0 .4rem; padding: .7rem 2rem; border-radius: 10px; background: #17635e; color: #fff; font-weight: 700; text-decoration: none; }
+  .go:hover { background: #124f4b; }
+  .note { margin-top: 1rem; font-size: .8rem; color: #536970; }
 </style>
 </head>
 <body>
-<form class="card" id="form" novalidate>
+<main class="card">
   <p class="eyebrow">ブロック型承認ワークフロー<span class="badge">試作版</span></p>
-  <h1>ログイン</h1>
-  <p class="hint" id="lead">お渡ししたログインIDとパスワードを入れてください。ログインすると、ワークフローの画面に移ります。</p>
-  <label for="id">ログインID</label>
-  <input id="id" autocomplete="username" autocapitalize="off" spellcheck="false" required>
-  <label for="pw">パスワード</label>
-  <input id="pw" type="password" autocomplete="current-password" required>
-  <p class="error" id="error" role="alert" hidden></p>
-  <button type="submit" id="go">ログイン</button>
-  <p class="note">これは試作版です。本物の名前や情報は入れないでください。お試し期間が終わると、入れたデータはまとめて消します。</p>
-</form>
+  <h1>承認ワークフローを試す</h1>
+  <p>下のボタンを押すと、ログイン画面が開きます。お渡ししたIDとパスワードで入ってください。</p>
+  <a class="go" id="go" href="#">ログイン画面へ</a>
+  <p class="note">これは試作版です。本物の名前や情報は入れないでください。</p>
+</main>
 <script>
-// 入口: ここでログイン → 使い捨ての札を作って、Googleの方（ワークフローの画面）へ渡す。向こうでもう一度ログインはしない。
-const SB_URL = 'https://kggkmecwelzlsgydrkct.supabase.co';
-const SB_KEY = 'sb_publishable_nZwq7tnAkjnL2FNRWtLLLg_xS6ertCC'; // 公開用の鍵（表には直接さわれない設定）
-const GAS_URL = ''; // ワークフローの画面（Google Apps Script のウェブアプリ /exec のURL）
-
-const $ = (id) => document.getElementById(id);
-async function rpc(name, args) {
-  let res;
-  try {
-    res = await fetch(`${SB_URL}/rest/v1/rpc/${name}`, { method: 'POST', cache: 'no-store',
-      headers: { apikey: SB_KEY, 'Content-Type': 'application/json' }, body: JSON.stringify(args) });
-  } catch { throw new Error('サーバーにつながりません。通信を確かめて、もう一度お試しください。'); }
-  const text = await res.text();
-  let data = null; try { data = text ? JSON.parse(text) : null; } catch {}
-  if (!res.ok) throw new Error(data?.message || `エラーが起きました（${res.status}）`);
-  return data;
-}
-function showError(message) { $('error').textContent = message; $('error').hidden = !message; }
-if (new URLSearchParams(location.search).has('logout')) $('lead').textContent = 'ログアウトしました。続けるときは、もう一度ログインしてください。';
-$('id').focus();
-$('form').addEventListener('submit', async (ev) => {
-  ev.preventDefault();
-  const id = $('id').value.trim(), pw = $('pw').value;
-  if (!id || !pw) { showError('ログインIDとパスワードを入れてください。'); return; }
-  if (!GAS_URL) { showError('ワークフローの画面のURLがまだ設定されていません。'); return; }
-  $('go').disabled = true; showError('');
-  try {
-    const session = await rpc('wf_login', { p_login: id, p_password: pw });
-    const ticket = await rpc('wf_ticket', { p_token: session.token });
-    try { await rpc('wf_logout', { p_token: session.token }); } catch {}
-    location.href = `${GAS_URL}?ticket=${encodeURIComponent(ticket)}`;
-  } catch (err) {
-    showError(err.message);
-    $('go').disabled = false;
-  }
-});
+  // ボタンの行き先（GASベータ版のウェブアプリ /exec のURL）
+  const APP_URL = '';
+  if (APP_URL) document.getElementById('go').href = APP_URL;
 </script>
 </body>
 </html>
