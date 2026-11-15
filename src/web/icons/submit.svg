@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">提出</title>
+  <rect x="2" y="2" width="60" height="60" rx="15" fill="#e0f3f4"/>
+  <g fill="none" stroke="#26757e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M17 11h24l7 7v34H17z" fill="#fff"/><path d="M40 11v10h8M24 43h17M24 49h11"/>
+    <path d="M32 36V23m-7 7 7-7 7 7" stroke-width="4"/>
+  </g>
+</svg>

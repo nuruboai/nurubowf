@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">受付</title>
+  <rect x="2" y="2" width="60" height="60" rx="15" fill="#e3f2ec"/>
+  <g fill="none" stroke="#24705a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M19 14h26v29H19z" fill="#fff"/><path d="M25 22h14M25 29h14M25 36h8"/>
+    <path d="M12 38v12h40V38H40l-4 6h-8l-4-6z" fill="#bddfd0"/>
+  </g>
+</svg>

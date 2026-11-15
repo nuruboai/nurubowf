@@ -1,0 +1,8 @@
+{
+  "name": "nurubowf",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node tools/build-web.mjs"
+  }
+}

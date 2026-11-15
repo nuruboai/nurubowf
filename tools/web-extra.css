@@ -1,0 +1,11 @@
+/* Web公開版だけの見た目 */
+body.web-version .two-person-tools, body.web-version .two-person-hint { display: none; }
+.login-info { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; margin: .4rem 0 0; font-size: .85rem; }
+.login-info button { font-size: .8rem; padding: .25rem .6rem; }
+.login-screen { position: fixed; inset: 0; z-index: 1000; display: grid; place-items: center; padding: 16px; background: #eef3f1; overflow-y: auto; }
+.login-card { width: min(100%, 26rem); background: #fff; border: 1px solid #cbd6d2; border-radius: 12px; padding: 1.5rem; box-shadow: 0 6px 24px rgba(23, 62, 67, .12); }
+.login-card h1 { margin: .2rem 0 .6rem; font-size: 1.5rem; color: #173e43; }
+.login-card .field { margin: .8rem 0; }
+.login-card input { width: 100%; box-sizing: border-box; }
+.login-card .button-row { margin-top: 1rem; }
+.login-card .login-note { margin-top: 1rem; font-size: .8rem; }
