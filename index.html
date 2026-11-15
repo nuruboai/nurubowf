@@ -4,30 +4,41 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#173e43">
-<title>承認ワークフロー 試作版</title>
+<title>nurubo 試作システム</title>
 <style>
   * { box-sizing: border-box; }
   body { margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 16px; background: #eef3f1; color: #233b40;
     font: 17px/1.75 -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, sans-serif; }
-  .card { width: min(100%, 28rem); background: #fff; border: 1px solid #cbd6d2; border-radius: 12px; padding: 1.75rem; text-align: center; box-shadow: 0 6px 24px rgba(23,62,67,.12); }
+  .card { width: min(100%, 34rem); background: #fff; border: 1px solid #cbd6d2; border-radius: 12px; padding: 1.75rem; text-align: center; box-shadow: 0 6px 24px rgba(23,62,67,.12); }
   .eyebrow { margin: 0; color: #536970; font-size: .9rem; }
   .badge { display: inline-block; margin-left: .4rem; padding: 0 .45rem; border: 1px solid #cbd6d2; border-radius: 4px; font-size: .8rem; }
-  h1 { margin: .3rem 0 .8rem; font-size: 1.5rem; color: #173e43; }
-  .go { display: inline-block; margin: .8rem 0 .4rem; padding: .7rem 2rem; border-radius: 10px; background: #17635e; color: #fff; font-weight: 700; text-decoration: none; }
-  .go:hover { background: #124f4b; }
-  .note { margin-top: 1rem; font-size: .8rem; color: #536970; }
+  h1 { margin: .3rem 0 .6rem; font-size: 1.5rem; color: #173e43; }
+  .lead { margin: 0 0 1.2rem; }
+  .apps { display: grid; grid-template-columns: repeat(2, 1fr); gap: .8rem; }
+  .app { display: flex; flex-direction: column; justify-content: center; min-height: 6.2rem; padding: .8rem .6rem; border-radius: 10px;
+    background: #17635e; color: #fff; font-weight: 700; text-decoration: none; line-height: 1.4; }
+  .app:hover { background: #124f4b; }
+  .app small { display: block; margin-top: .35rem; font-weight: 400; font-size: .78rem; opacity: .9; }
+  .app.off { background: #e3e8e6; color: #8a9a9e; cursor: not-allowed; pointer-events: none; }
+  .note { margin-top: 1.2rem; font-size: .8rem; color: #536970; }
+  @media (max-width: 380px) { .apps { grid-template-columns: 1fr; } .app { min-height: 4.6rem; } }
 </style>
 </head>
 <body>
 <main class="card">
-  <p class="eyebrow">ブロック型承認ワークフロー<span class="badge">試作版</span></p>
-  <h1>承認ワークフローを試す</h1>
-  <p>下のボタンを押すと、ログイン画面が開きます。お渡ししたIDとパスワードで入ってください。</p>
-  <a class="go" id="go" href="#">ログイン画面へ</a>
+  <p class="eyebrow">nurubo<span class="badge">試作版</span></p>
+  <h1>試作システム</h1>
+  <p class="lead">使うシステムのボタンを押してください。お渡ししたIDとパスワードで入れます。</p>
+  <nav class="apps">
+    <a class="app" id="go" href="#">承認ワークフロー<small>ログイン画面へ</small></a>
+    <span class="app off" aria-disabled="true">物品管理システム<small>準備中</small></span>
+    <span class="app off" aria-disabled="true">会議室予約システム<small>準備中</small></span>
+    <span class="app off" aria-disabled="true">デジタル名刺<small>準備中</small></span>
+  </nav>
   <p class="note">これは試作版です。本物の名前や情報は入れないでください。</p>
 </main>
 <script>
-  // ボタンの行き先（GASベータ版のウェブアプリ /exec のURL）
+  // 承認ワークフローの行き先（GASベータ版のウェブアプリ /exec のURL）
   const APP_URL = 'https://script.google.com/a/macros/nurubo.com/s/AKfycbyjQmVgtA3Ri7oVH2ba27wf_5xDROdfq9he1VquUpY_k3UbDTPfdKaL3htzBc-I4eFn/exec?view=login';
   if (APP_URL) document.getElementById('go').href = APP_URL;
 </script>
