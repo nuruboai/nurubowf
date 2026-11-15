@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
-  <title id="title">決裁</title>
-  <rect x="2" y="2" width="60" height="60" rx="15" fill="#f0eafa"/>
-  <g fill="none" stroke="#78509c" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M32 12c7 5 13 6 18 7v13c0 10-8 16-18 21-10-5-18-11-18-21V19c5-1 11-2 18-7z" fill="#fff"/>
-    <path d="m23 32 6 6 13-14" stroke-width="4"/>
-  </g>
-</svg>
